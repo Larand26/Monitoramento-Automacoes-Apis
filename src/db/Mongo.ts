@@ -32,4 +32,14 @@ export default class Mongo {
       process.exit(1);
     }
   }
+
+  static async getData(model: mongoose.Model<any>, query: any) {
+    try {
+      const data = await model.find(query);
+      return data;
+    } catch (error) {
+      console.error("Error retrieving data from MongoDB:", error);
+      process.exit(1);
+    }
+  }
 }
