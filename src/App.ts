@@ -15,6 +15,6 @@ export default class App {
   }
 
   routes() {
-    this.server.use(routes);
+    this.server.use("/rest/v1", routes);
   }
 }
