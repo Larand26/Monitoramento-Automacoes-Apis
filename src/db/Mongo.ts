@@ -21,4 +21,15 @@ export default class Mongo {
       process.exit(1);
     }
   }
+
+  static async addData(model: mongoose.Model<any>, data: any) {
+    try {
+      const newData = new model(data);
+      await newData.save();
+      console.log("Data added to MongoDB");
+    } catch (error) {
+      console.error("Error adding data to MongoDB:", error);
+      process.exit(1);
+    }
+  }
 }
