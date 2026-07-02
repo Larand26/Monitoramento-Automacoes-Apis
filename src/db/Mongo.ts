@@ -11,4 +11,14 @@ export default class Mongo {
       process.exit(1);
     }
   }
+
+  static async disconnect() {
+    try {
+      await mongoose.disconnect();
+      console.log("Disconnected from MongoDB");
+    } catch (error) {
+      console.error("Error disconnecting from MongoDB:", error);
+      process.exit(1);
+    }
+  }
 }
