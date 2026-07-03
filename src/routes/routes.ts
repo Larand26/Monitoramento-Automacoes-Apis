@@ -4,6 +4,7 @@ import type { Request, Response } from "express";
 import { validateLogMiddleware } from "../middlewares/validateLog.js";
 
 //Controllers
+import LogsController from "../controllers/LogsController.js";
 
 const routes = Router();
 
@@ -15,7 +16,7 @@ routes.post(
   "/add-log",
   validateLogMiddleware,
   (req: Request, res: Response) => {
-    return res.json({ message: "Log added successfully" });
+    return LogsController.addLog(req, res);
   },
 );
 
