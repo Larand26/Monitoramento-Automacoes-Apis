@@ -2,9 +2,16 @@ import appConfig from "../config/app.config.js";
 import mongoose from "mongoose";
 
 export default class Mongo {
+  static connection: mongoose.Connection | null = null;
+
   static async connect() {
     try {
+      if (this.connection && this.connection.readyState === 1) {
+        console.log("Already connected to MongoDB");
+        return;
+      }
       await mongoose.connect(appConfig.mongo.uri);
+      this.connection = mongoose.connection;
       console.log("Connected to MongoDB");
     } catch (error) {
       console.error("Error connecting to MongoDB:", error);
@@ -14,8 +21,11 @@ export default class Mongo {
 
   static async disconnect() {
     try {
-      await mongoose.disconnect();
-      console.log("Disconnected from MongoDB");
+      if (this.connection && this.connection.readyState === 1) {
+        await mongoose.disconnect();
+        this.connection = null;
+        console.log("Disconnected from MongoDB");
+      }
     } catch (error) {
       console.error("Error disconnecting from MongoDB:", error);
       process.exit(1);

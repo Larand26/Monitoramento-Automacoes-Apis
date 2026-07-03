@@ -9,7 +9,6 @@ export default class LogsService {
     try {
       await Mongo.connect();
       await Mongo.addData(LogModel, log);
-      await Mongo.disconnect();
       return;
     } catch (error) {
       throw new Error("Error adding log");
@@ -28,7 +27,6 @@ export default class LogsService {
       if (filters.environment) query.environment = filters.environment;
       if (filters.status) query.status = filters.status;
       const logs = await Mongo.getData(LogModel, query);
-      await Mongo.disconnect();
       return logs;
     } catch (error) {
       throw new Error("Error fetching logs");
