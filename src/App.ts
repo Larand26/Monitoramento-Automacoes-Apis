@@ -13,7 +13,10 @@ export default class App {
   middlewares() {
     this.server.use(
       cors({
-        origin: "http://localhost:5173",
+        origin: [
+          "http://localhost:5173",
+          "https://monitoramento-automacoes-production.up.railway.app",
+        ],
         methods: ["GET", "POST", "PUT", "DELETE"],
         allowedHeaders: ["Content-Type", "Authorization"],
       }),
