@@ -15,4 +15,23 @@ export default class LogsService {
       throw new Error("Error adding log");
     }
   }
+
+  static async getLogs(filters: {
+    jobName?: string;
+    environment?: string;
+    status?: "success" | "error" | "warning" | "running";
+  }): Promise<iLog[]> {
+    try {
+      await Mongo.connect();
+      const query: any = {};
+      if (filters.jobName) query.jobName = filters.jobName;
+      if (filters.environment) query.environment = filters.environment;
+      if (filters.status) query.status = filters.status;
+      const logs = await Mongo.getData(LogModel, query);
+      await Mongo.disconnect();
+      return logs;
+    } catch (error) {
+      throw new Error("Error fetching logs");
+    }
+  }
 }

@@ -20,4 +20,8 @@ routes.post(
   },
 );
 
+routes.get("/get-logs", (req: Request, res: Response) => {
+  return LogsController.getLogs(req, res);
+});
+
 export default routes;
